@@ -9,4 +9,13 @@ public class Quotation {
         this.text = text;
         this.author = author;
     }
+    public int getId() {
+        return id;
+    }
+    public String getText() {
+        return text;
+    }
+    public String getAuthor() {
+        return author;
+    }
 }

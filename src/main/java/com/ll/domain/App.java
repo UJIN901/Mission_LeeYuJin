@@ -1,15 +1,20 @@
-package com.ll;
+package com.ll.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    Scanner scanner = new Scanner(System.in);
-    List<Quotation> quotations = new ArrayList<>();
-    int quoteId = 0;
+    private Scanner scanner;
+    private List<Quotation> quotations;
+    private int quoteId;
+    public App(){
+        scanner = new Scanner(System.in);
+        quotations = new ArrayList<>();
+        quoteId = 0;
+    }
 
-    void run() {
+    public void run() {
         System.out.println("== 명언 앱 ==");
         while (true) {
             System.out.print("명령) ");
@@ -35,7 +40,7 @@ public class App {
         }
     }
 
-    void registerQuote() {
+    private void registerQuote() {
         System.out.print("명언 : ");
         String cmdText = scanner.nextLine();
         System.out.print("작가 : ");
@@ -48,7 +53,7 @@ public class App {
         System.out.printf("%d번 명언이 등록되었습니다.\n", quoteId);
     }
 
-    void displayQuote() {
+    private void displayQuote() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         if (quotations.isEmpty()) {
@@ -61,7 +66,7 @@ public class App {
         }
     }
 
-    void removeQuote(Rq rq) {
+    private void removeQuote(Rq rq) {
         int id = rq.getParamAsInt("id", -1);
         if (id == -1) {
             System.out.println("입력 양식이 유효하지 않습니다. 다시 입력해주세요.");
@@ -79,7 +84,7 @@ public class App {
         }
     }
 
-    void modifyQuote(Rq rq){
+    private void modifyQuote(Rq rq){
         int id = rq.getParamAsInt("id", -1);
         if (id == -1) {
             System.out.println("입력 양식이 유효하지 않습니다. 다시 입력해주세요.");
@@ -91,11 +96,11 @@ public class App {
                     System.out.printf("명언(기존) : %s\n", temp.getText());
                     System.out.print("명언 : ");
                     String cmdText = scanner.nextLine();
-                    temp.text = cmdText;
+                    temp.setText(cmdText);
                     System.out.printf("작가(기존) : %s\n", temp.getAuthor());
                     System.out.print("작가 : ");
                     String cmdAuthor = scanner.nextLine();
-                    temp.author = cmdAuthor;
+                    temp.setAuthor(cmdAuthor);
                     return;
                 }
             }

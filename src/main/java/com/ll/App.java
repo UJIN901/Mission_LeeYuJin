@@ -29,6 +29,8 @@ public class App {
                 case "삭제":
                     removeQuote(rq);
                     break;
+                case "수정":
+                    modifyQuote(rq);
             }
         }
     }
@@ -70,6 +72,30 @@ public class App {
                 if(temp.getId() == id){
                     quotations.remove(i);
                     System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
+                    return;
+                }
+            }
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
+        }
+    }
+
+    void modifyQuote(Rq rq){
+        int id = rq.getParamAsInt("id", -1);
+        if (id == -1) {
+            System.out.println("입력 양식이 유효하지 않습니다. 다시 입력해주세요.");
+            return;
+        } else {
+            for(int i = 0; i < quotations.size(); i++){
+                Quotation temp = quotations.get(i);
+                if(temp.getId() == id){
+                    System.out.printf("명언(기존) : %s\n", temp.getText());
+                    System.out.print("명언 : ");
+                    String cmdText = scanner.nextLine();
+                    temp.text = cmdText;
+                    System.out.printf("작가(기존) : %s\n", temp.getAuthor());
+                    System.out.print("작가 : ");
+                    String cmdAuthor = scanner.nextLine();
+                    temp.author = cmdAuthor;
                     return;
                 }
             }

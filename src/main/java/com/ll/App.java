@@ -65,8 +65,15 @@ public class App {
             System.out.println("입력 양식이 유효하지 않습니다. 다시 입력해주세요.");
             return;
         } else {
-            quotations.removeIf(obj -> obj.getId() == id);
-            System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
+            for(int i = 0; i < quotations.size(); i++){
+                Quotation temp = quotations.get(i);
+                if(temp.getId() == id){
+                    quotations.remove(i);
+                    System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
+                    return;
+                }
+            }
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
         }
     }
 }

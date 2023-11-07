@@ -14,14 +14,21 @@ public class App {
         while (true) {
             System.out.print("명령) ");
             String cmd = scanner.nextLine();
-            if (cmd.equals("종료")) {
-                break;
-            } else if (cmd.equals("등록")) {
-                registerQuote();
-            } else if (cmd.equals("목록")) {
-                displayQuote();
-            } else if (cmd.contains("삭제")) {
-                removeQuote(cmd);
+
+            Rq rq = new Rq(cmd);
+
+            switch (rq.getAction()) {
+                case "종료":
+                    return;
+                case "등록":
+                    registerQuote();
+                    break;
+                case "목록":
+                    displayQuote();
+                    break;
+                case "삭제":
+                    removeQuote(rq);
+                    break;
             }
         }
     }
@@ -52,31 +59,14 @@ public class App {
         }
     }
 
-    void removeQuote(String cmd) {
-        String[] cmdBits = cmd.split("\\?", 2);
-        if(cmdBits.length != 2 || cmdBits[1].isEmpty()){
+    void removeQuote(Rq rq) {
+        int id = rq.getParamAsInt("id", -1);
+        if (id == -1) {
             System.out.println("입력 양식이 유효하지 않습니다. 다시 입력해주세요.");
             return;
-        }
-
-        String command = cmdBits[0];
-        String queryString = cmdBits[1];
-
-        String[] queryStringBits = queryString.split("&");
-        for (String str : queryStringBits) {
-            String[] queryStringBit = str.split("=", 2);
-            if(queryStringBit.length !=2 || queryStringBit[0].isEmpty() || queryStringBit[1].isEmpty()){
-                System.out.println("입력 양식이 유효하지 않습니다. 다시 입력해주세요.");
-                return;
-            }
-            String queryName = queryStringBit[0];
-            String queryValue = queryStringBit[1];
-
-            if (queryName.equals("id")) {
-                quotations.removeIf(obj -> obj.getId() == Integer.parseInt(queryValue));
-                System.out.printf("%d번 명언이 삭제되었습니다.\n", Integer.parseInt(queryValue));
-                break;
-            }
+        } else {
+            quotations.removeIf(obj -> obj.getId() == id);
+            System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
         }
     }
 }
